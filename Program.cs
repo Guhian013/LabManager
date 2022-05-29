@@ -12,11 +12,6 @@ var computerRepository = new ComputerRepository(databaseConfig);
 var modelName = args[0];
 var modelAction = args[1];
 
-// Computer Atributes - Routing
-var id = Convert.ToInt32(args[2]);
-var ram = args[3];
-var processor = args[4];
-
 if(modelName == "Computer")
 {
     if(modelAction == "List")
@@ -31,14 +26,29 @@ if(modelName == "Computer")
     
     if (modelAction == "New")
     {
+        var id = Convert.ToInt32(args[2]);
+        var ram = args[3];
+        var processor = args[4];
+
         var computer = new Computer(id, ram, processor);
         computerRepository.Save(computer);
     }
 
     if (modelAction == "Update")
     {
+        var id = Convert.ToInt32(args[2]);
+        var ram = args[3];
+        var processor = args[4];
+
         var computer = new Computer(id, ram, processor);
         computerRepository.Update(computer);
+    }
+
+    if(modelAction == "Delete")
+    {
+        var id = Convert.ToInt32(args[2]);
+
+        computerRepository.Delete(id);
     }
 }
 
@@ -68,6 +78,7 @@ if(modelName == "Lab")
     
     if (modelAction == "New")
     {
+        var id = Convert.ToInt32(args[2]);
         var number = args[3];
         var name = args[4];
         var block = args[5];
