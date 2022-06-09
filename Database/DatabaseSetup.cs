@@ -37,7 +37,7 @@ class DatabaseSetup
 
         var command = connection.CreateCommand();
         command.CommandText = @"
-            CREATE TABLE IF NOT EXISTS Lab(
+            CREATE TABLE IF NOT EXISTS Labs(
                 id int not null primary key,
                 number int not null,
                 name varchar(100) not null,
