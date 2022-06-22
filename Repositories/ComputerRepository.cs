@@ -18,10 +18,8 @@ class ComputerRepository
     {
         using var connection = new SqliteConnection(_databaseConfig.ConnectionString);
         connection.Open();
-
-        var computers = connection.Query<Computer>("SELECT * FROM Computers"); 
        
-        return computers;
+        return connection.Query<Computer>("SELECT * FROM Computers");
     }
 
     public Computer Save(Computer computer)
@@ -39,7 +37,7 @@ class ComputerRepository
         using var connection = new SqliteConnection(_databaseConfig.ConnectionString);
         connection.Open();
 
-        connection.Execute("UPDATE Computers SET Ram = @ram, Processor = @processor WHERE id = @Id", computer);
+        connection.Execute("UPDATE Computers SET Ram = @Ram, Processor = @Processor WHERE id = @Id", computer);
     }
 
     public void Delete(int id) 
@@ -54,10 +52,8 @@ class ComputerRepository
     {
         using var connection = new SqliteConnection(_databaseConfig.ConnectionString);
         connection.Open();
-
-        var computer = connection.QuerySingle<Computer>("SELECT * FROM Computers WHERE id = @Id", new {Id = id}); 
     
-        return computer;
+        return connection.QuerySingle<Computer>("SELECT * FROM Computers WHERE id = @Id", new {Id = id}); 
     }
 
     public bool ExistsByID(int id) 
@@ -65,13 +61,6 @@ class ComputerRepository
         var connection = new SqliteConnection(_databaseConfig.ConnectionString);
         connection.Open();
 
-        var result = connection.ExecuteScalar<Boolean>("SELECT count(id) FROM Computers WHERE id = @Id", new {Id = id});
-
-        return result;
-    }
-
-    private Computer ReaderToComputer(SqliteDataReader reader) {
-        var computer = new Computer(reader.GetInt32(0), reader.GetString(1), reader.GetString(2));
-        return computer; 
+        return connection.ExecuteScalar<Boolean>("SELECT count(id) FROM Computers WHERE id = @Id", new {Id = id});
     }
 }
